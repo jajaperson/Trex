@@ -17,9 +17,7 @@ export function Version(version: string) {
 }
 
 export function LogHelp(helpsInfo: string[]) {
-  for (const info of helpsInfo) {
-    console.log(info);
-  }
+  console.log(helpsInfo.join(""));
 }
 
 export async function updateTrex(): Promise<void> {
@@ -33,7 +31,7 @@ export async function updateTrex(): Promise<void> {
     setTimeout(async () => {
       await exec({
         config: {
-          permissions: ["-A", "--unstable", "-n", "imports"],
+          permissions: ["-r", "-A", "--unstable", "-n", "imports"],
           url: "https://denopkg.com/crewdevio/Trex@imports/cli.ts",
         },
       });
@@ -101,7 +99,7 @@ export function CommandNotFound({ commands, flags }: CommandNotFoundParams) {
       colors.red("Command not found:\n"),
 
       colors.green(
-        `\n${colors.red("imports")} ${colors.yellow(command)}: unknown command\n`
+        `\n${colors.red("imports")} ${colors.yellow(command ?? "empty command")}: unknown command\n`
       ),
 
       colors.green(
@@ -119,13 +117,13 @@ export function CommandNotFound({ commands, flags }: CommandNotFoundParams) {
       colors.red("Command flag not found:\n"),
 
       colors.green(
-        `\n${colors.red("imports")} ${colors.yellow(command)}  ${colors.yellow(
+        `\n${colors.red("imports")} ${colors.yellow(command ?? "empty command")}  ${colors.yellow(
           flag
         )}: unknown command flag\n`
       ),
 
       colors.green(
-        `\nuse ${colors.red("imports")} ${colors.yellow(command)} ${colors.yellow(
+        `\nuse ${colors.red("imports")} ${colors.yellow(command ?? "empty command")} ${colors.yellow(
           "--help"
         )} to see available command flags\n`
       )
